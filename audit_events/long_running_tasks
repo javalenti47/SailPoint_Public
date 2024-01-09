@@ -1,0 +1,11 @@
+/*** executing tasks that are more than 25% longer then their average or over 4 hours ****/ 
+select '005' AS alert_id,'iam_long_running' AS alert_name, [name], [run_length_average]
+,DATEDIFF(SECOND, '19700101', GETUTCDATE()) - ([launched] / 1000) as elapsed_secs
+,((DATEDIFF(SECOND, '19700101', GETUTCDATE()) - ([launched] / 1000)) / [run_length_average])*100 as run_pct
+from data.base.123
+where [completed] is null and [type] <> 'Workflow'
+and ((DATEDIFF(SECOND, '19700101', GETUTCDATE()) - ([launched] / 1000)) / [run_length_average] > 1.25
+or ((DATEDIFF(SECOND, '19700101', GETUTCDATE()) - ([launched] / 1000)) > 14400 
+and name not in ('Daily Full Identity Refresh','CMH Full Production Pass','CMH Delta Aggregation and Provisioning','TaskList1','Tasklist2'))
+or ((DATEDIFF(SECOND, '19700101', GETUTCDATE()) - ([launched] / 1000)) > 21600 
+and name in ('Daily Full Identity Refresh','CMH Full Production Pass','CMH Delta Aggregation and Provisioning','TaskList1','Tasklist2')))
