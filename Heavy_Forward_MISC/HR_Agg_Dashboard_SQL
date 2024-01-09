@@ -1,0 +1,9 @@
+SELECT RelationshipStatus,
+        count(*) AS CountOf
+FROM data.base.123
+WHERE PrimaryWorkAssignment = 'YES'
+        AND (RelationshipStatus IN ('ACTIVE','Limited Scope') or(RelationshipStatus = 'TERMINATED'
+        AND TerminationDate >= dateadd (yyyy,-3,getdate()))
+        OR (RelationshipStatus = 'PREHIRE'
+        AND StartDate <= dateadd (dd,30,getdate())))
+        AND AssignmentType NOT IN ('FOODVENDNOTSODEXHO','FOODVENDSODEXHO')group by RelationshipStatus
