@@ -1,0 +1,6 @@
+/****** How many mailReqd=Yes? ******/
+SELECT status, count(*) FROM data.base.123
+select * FROM identityiq.identityiq.spt_identity
+--where [attributes] like '%"mailReqd" value="Yes%'
+where correlated = 1 and bundle_summary is not null
+group by status
