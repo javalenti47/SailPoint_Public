@@ -1,0 +1,10 @@
+SELECT '001' AS alert_id, 'uncorrelated_sp_accounts' AS alert_name, 'Active Directory' AS App,id.name,lnk.display_name,status,lnk.id AS lnk_id,id.employee_id ,CAST(lnk.ATTRIBUTES AS XML).value('(Attributes/Map/entry[@key="employeeID"]/@value)[1]', 'varchar(max)') AS "lnkEmpID"
+FROM identityiq.identityiq.spt_identity id, identityiq.identityiq.spt_link lnk
+WHERE id.id = lnk.identity_id
+        AND lnk.application = '8ae4bfb56d63cd94016d63ce7ad50016'
+        AND id.id IN 
+    (SELECT identity_id
+    FROM data.base.123
+    WHERE application = '8ae4bfb56d63cd94016d63ce7ad50016'
+    GROUP BY  identity_id
+    HAVING count(*) > 1)
