@@ -6,6 +6,6 @@ from data.base.123
 where [completed] is null and [type] <> 'Workflow'
 and ((DATEDIFF(SECOND, '19700101', GETUTCDATE()) - ([launched] / 1000)) / [run_length_average] > 1.25
 or ((DATEDIFF(SECOND, '19700101', GETUTCDATE()) - ([launched] / 1000)) > 14400 
-and name not in ('Daily Full Identity Refresh','CMH Full Production Pass','CMH Delta Aggregation and Provisioning','TaskList1','Tasklist2'))
+and name not in ('Daily Full Identity Refresh','Full Production Pass','Delta Aggregation and Provisioning','TaskList1','Tasklist2'))
 or ((DATEDIFF(SECOND, '19700101', GETUTCDATE()) - ([launched] / 1000)) > 21600 
-and name in ('Daily Full Identity Refresh','CMH Full Production Pass','CMH Delta Aggregation and Provisioning','TaskList1','Tasklist2')))
+and name in ('Daily Full Identity Refresh','Full Production Pass',' Aggregation and Provisioning','TaskList1','Tasklist2')))
